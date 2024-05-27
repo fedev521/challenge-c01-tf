@@ -24,21 +24,20 @@ resource "libvirt_volume" "main_disk" {
   base_volume_id = libvirt_volume.os.id
 }
 
-data "template_file" "user_data" {
-  template = file("${path.module}/config/cloud_init.cfg")
-}
-
-data "template_file" "network_config" {
-  template = file("${path.module}/config/network_config.cfg")
+locals {
+  hostname = [for i in range(var.node_count) : "node-${i + 1}"]
 }
 
 resource "libvirt_cloudinit_disk" "commoninit" {
   count = var.node_count
 
-  name           = "commoninit.iso"
-  user_data      = data.template_file.user_data.rendered
-  network_config = data.template_file.network_config.rendered
-  pool           = libvirt_volume.main_disk[count.index].pool
+  name = "commoninit.iso"
+  pool = libvirt_volume.main_disk[count.index].pool
+
+  user_data = templatefile("${path.module}/config/cloud_init.cfg", {
+    "hostname" = local.hostname[count.index]
+  })
+  network_config = templatefile("${path.module}/config/network_config.cfg", {})
 }
 
 resource "libvirt_network" "kubenetwork" {
@@ -85,7 +84,7 @@ resource "libvirt_domain" "node" {
 
   network_interface {
     network_id     = libvirt_network.kubenetwork.id
-    hostname       = "node-${count.index + 1}"
+    hostname       = local.hostname[count.index]
     wait_for_lease = true
   }
 

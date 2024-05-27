@@ -24,12 +24,12 @@ variable "disk_size_gb" {
 
 variable "ram_mb" {
   type        = number
-  description = "Node RAM size in MiB"
-  default     = 512
+  description = "Node RAM size in MiB (k3s recommends 1 GB)"
+  default     = 1024
 }
 
 variable "vcpus" {
   type        = number
-  description = "Number of vCPUs in each node"
+  description = "Number of vCPUs in each node (k3s recommends 2)"
   default     = 1
 }
