@@ -13,10 +13,12 @@ Get kubeconfig to access the cluster via `kubectl`:
 
 ```bash
 ./scripts/get-kubeconfig.sh
-export KUBECONFIG="$PWD/k3s-config"
 
-# (optional) to make changes permanent
-export KUBECONFIG="${KUBECONFIG:-~/.kube/config}:$PWD/k3s-config"
+# option 1: ephemeral
+export KUBECONFIG="$PWD/k3s-kubeconfig"
+
+# option 2: permanent
+export KUBECONFIG="${KUBECONFIG:-~/.kube/config}:$PWD/k3s-kubeconfig"
 kubectl config view --merge --flatten > ~/.kube/config-merged && mv ~/.kube/config-merged ~/.kube/config
 ```
 

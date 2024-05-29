@@ -35,4 +35,4 @@ terraform.rc
 
 notes.md
 *.bak
-k3s-config
+k3s-kubeconfig

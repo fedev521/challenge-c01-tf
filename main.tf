@@ -26,6 +26,12 @@ resource "libvirt_volume" "main_disk" {
 
 locals {
   hostname = [for i in range(var.node_count) : "node-${i + 1}"]
+  k3s_config = templatefile("${path.module}/config/k3s-config.yaml.tftpl", {
+    "pod_cidr"       = var.pod_cidr
+    "service_cidr"   = var.service_cidr
+    "cluster_dns_ip" = var.cluster_dns_ip
+    "node_labels"    = []
+  })
 }
 
 resource "libvirt_cloudinit_disk" "commoninit" {
@@ -35,7 +41,9 @@ resource "libvirt_cloudinit_disk" "commoninit" {
   pool = libvirt_volume.main_disk[count.index].pool
 
   user_data = templatefile("${path.module}/config/cloud_init.cfg", {
-    "hostname" = local.hostname[count.index]
+    "hostname"            = local.hostname[count.index]
+    "k3s_config"          = local.k3s_config
+    "ssh_authorized_keys" = [for p in var.ssh_authorized_keys_paths : chomp(file(p))]
   })
   network_config = templatefile("${path.module}/config/network_config.cfg", {})
 }

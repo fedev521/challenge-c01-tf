@@ -1,0 +1,12 @@
+# By default, values present in a YAML file located at /etc/rancher/k3s/config.yaml will be used on install.
+
+%{~ if length(node_labels) > 0 ~}
+node-label:
+%{ for nl in node_labels ~}
+  - "${nl}"
+%{ endfor ~}
+%{ endif ~}
+
+cluster-cidr: "${pod_cidr}"
+service-cidr: "${service_cidr}"
+cluster-dns: "${cluster_dns_ip}"
