@@ -36,3 +36,4 @@ terraform.rc
 notes.md
 *.bak
 k3s-kubeconfig
+test-vm.tf
