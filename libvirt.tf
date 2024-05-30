@@ -3,13 +3,13 @@ provider "libvirt" {
 }
 
 resource "libvirt_pool" "kubestorage" {
-  name = "kubestorage"
+  name = "kube-storage"
   type = "dir"
   path = "/tmp/libvirt-pool-kubestorage"
 }
 
 resource "libvirt_volume" "os" {
-  name   = "base-os.qcow2"
+  name   = "kube-base-os.qcow2"
   pool   = libvirt_pool.kubestorage.name
   source = var.os
   format = "qcow2"
@@ -18,7 +18,7 @@ resource "libvirt_volume" "os" {
 resource "libvirt_volume" "main_disk" {
   for_each = local.nodes
 
-  name           = "vol-${each.key}.qcow2"
+  name           = "kube-vol-${each.key}.qcow2"
   size           = var.disk_size_gb * 1000 * 1000 * 1000
   pool           = libvirt_volume.os.pool
   base_volume_id = libvirt_volume.os.id
@@ -27,7 +27,7 @@ resource "libvirt_volume" "main_disk" {
 resource "libvirt_cloudinit_disk" "commoninit" {
   for_each = local.nodes
 
-  name = "commoninit.iso"
+  name = "kube-commoninit-${each.key}.iso"
   pool = libvirt_volume.main_disk[each.key].pool
 
   user_data      = local.cloud_init[each.key]
@@ -35,7 +35,7 @@ resource "libvirt_cloudinit_disk" "commoninit" {
 }
 
 resource "libvirt_network" "kubenetwork" {
-  name      = "k8snet"
+  name      = "kube-net"
   mode      = "nat"
   domain    = "k8s.local"
   addresses = ["10.17.3.0/24"]

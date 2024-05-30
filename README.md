@@ -59,7 +59,14 @@ terraform init
 terraform apply
 ```
 
-Note: at the time of writing, only the single-node cluster has been tested.
+Note: at the time of writing, only [this setup]([k3s-architecture-single-server](https://docs.k3s.io/architecture#single-server-setup-with-an-embedded-db))
+with 1 server and N agents (each running `ubuntu-22.04-server-cloudimg`) has
+been tested. Refer to the following architecture:
+
+![single-server setup](https://docs.k3s.io/img/k3s-architecture-single-server.svg)
+
+[HA k3s](https://docs.k3s.io/architecture#high-availability-k3s) support is
+coming.
 
 ### 3.2. Get kubeconfig
 
@@ -82,7 +89,7 @@ Deploy and call a sample application:
 
 ```bash
 kubectl apply -f sample-app/
-kubectl get pods -n k3s-test
+kubectl get pods -n k3s-test -o wide
 
 ip=$(terraform output -raw 'k3s_master_ip')
 curl "http://$ip/test"
