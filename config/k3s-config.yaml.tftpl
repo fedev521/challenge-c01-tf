@@ -7,6 +7,8 @@ node-label:
 %{ endfor ~}
 %{ endif ~}
 
+token: "${cluster_token}"
+
 cluster-cidr: "${pod_cidr}"
 service-cidr: "${service_cidr}"
 cluster-dns: "${cluster_dns_ip}"

@@ -14,10 +14,11 @@ locals {
   }
 
   k3s_config = templatefile("${path.module}/config/k3s-config.yaml.tftpl", {
+    "node_labels"    = []
+    "cluster_token"  = random_password.cluster_token.result
     "pod_cidr"       = var.pod_cidr
     "service_cidr"   = var.service_cidr
     "cluster_dns_ip" = var.cluster_dns_ip
-    "node_labels"    = []
   })
 
   cloud_init = {
