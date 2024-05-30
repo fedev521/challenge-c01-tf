@@ -10,12 +10,6 @@ variable "ssh_authorized_keys_paths" {
   default     = []
 }
 
-variable "node_count" {
-  type        = number
-  description = "Number of VMs/nodes to be created"
-  default     = 1
-}
-
 variable "k3s_server_count" {
   description = "The variable to check"
   type        = number
