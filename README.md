@@ -28,7 +28,7 @@ Deploy and call a sample application:
 kubectl apply -f sample-app/
 kubectl get pods -n k3s-test
 
-ip=$(terraform output -raw 'k3s_server_ip')
+ip=$(terraform output -raw 'k3s_master_ip')
 curl "http://$ip/test"
 ```
 

@@ -16,6 +16,23 @@ variable "node_count" {
   default     = 1
 }
 
+variable "k3s_server_count" {
+  description = "The variable to check"
+  type        = number
+  default     = 1
+
+  validation {
+    condition     = var.k3s_server_count > 0
+    error_message = "The variable 'k3s_server_count' must be greater than 0."
+  }
+}
+
+variable "k3s_agent_count" {
+  type        = number
+  description = "Number of VMs/nodes with agent role"
+  default     = 0
+}
+
 variable "os" {
   type        = string
   description = "OS image URL or path"
