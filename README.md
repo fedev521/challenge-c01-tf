@@ -50,7 +50,12 @@ the following variables:
 
 You can also tweak other important settings, such CPUs, RAM and disk sizes or
 pod and services CIDR ranges. You can find information about module's variables
-and outputs in [this file](./docs/terraform-docs.md). 
+and outputs in [this file](./docs/terraform-docs.md).
+
+You can create a single-node server setup (default) or a highly available
+architecture by setting the `k3s_server_count` and `k3s_agent_count` variables.
+Refer to the [k3s official documentation](https://docs.k3s.io/architecture) for
+more information.
 
 To create the cluster:
 
@@ -59,14 +64,7 @@ terraform init
 terraform apply
 ```
 
-Note: at the time of writing, only [this setup]([k3s-architecture-single-server](https://docs.k3s.io/architecture#single-server-setup-with-an-embedded-db))
-with 1 server and N agents (each running `ubuntu-22.04-server-cloudimg`) has
-been tested. Refer to the following architecture:
-
-![single-server setup](https://docs.k3s.io/img/k3s-architecture-single-server.svg)
-
-[HA k3s](https://docs.k3s.io/architecture#high-availability-k3s) support is
-coming.
+Note: I tested only with `ubuntu-22.04-server-cloudimg` OS.
 
 ### 3.2. Get kubeconfig
 

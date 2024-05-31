@@ -15,7 +15,9 @@ agent-token: ${agent_token}
 token: ${agent_token}
 %{ endif ~}
 
-%{~ if !is_master ~}
+%{~ if is_master ~}
+cluster-init: true
+%{ else ~}
 server: ${k3s_url}
 %{ endif ~}
 

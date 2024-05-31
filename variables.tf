@@ -11,7 +11,7 @@ variable "ssh_authorized_keys_paths" {
 }
 
 variable "k3s_server_count" {
-  description = "The variable to check"
+  description = "Number of VMs/nodes with server role"
   type        = number
   default     = 1
 
