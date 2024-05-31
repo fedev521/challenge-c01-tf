@@ -7,7 +7,7 @@
 | <a name="input_cluster_dns_ip"></a> [cluster\_dns\_ip](#input\_cluster\_dns\_ip) | IPv4 address for CoreDNS ClusterIP service. Must be in `var.service_cidr` | `string` | `"10.43.0.10"` | no |
 | <a name="input_disk_size_gb"></a> [disk\_size\_gb](#input\_disk\_size\_gb) | Size of node disks in GB (billions of bytes) | `number` | `10` | no |
 | <a name="input_k3s_agent_count"></a> [k3s\_agent\_count](#input\_k3s\_agent\_count) | Number of VMs/nodes with agent role | `number` | `0` | no |
-| <a name="input_k3s_server_count"></a> [k3s\_server\_count](#input\_k3s\_server\_count) | The variable to check | `number` | `1` | no |
+| <a name="input_k3s_server_count"></a> [k3s\_server\_count](#input\_k3s\_server\_count) | Number of VMs/nodes with server role | `number` | `1` | no |
 | <a name="input_libvirt_uri"></a> [libvirt\_uri](#input\_libvirt\_uri) | libvirt URI | `string` | `"qemu:///system"` | no |
 | <a name="input_os"></a> [os](#input\_os) | OS image URL or path | `string` | `"https://cloud-images.ubuntu.com/releases/jammy/release/ubuntu-22.04-server-cloudimg-amd64.img"` | no |
 | <a name="input_pod_cidr"></a> [pod\_cidr](#input\_pod\_cidr) | CIDR range for the pod network | `string` | `"10.42.0.0/16"` | no |
